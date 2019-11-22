@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="is-size-1">Enrollment</h1>
+    <h1 class="is-size-1">Enrolled Subjects</h1>
     <div>
       <b-table
         :data="(isEmpty) ? [] : subjects"
@@ -9,6 +9,7 @@
         striped
         hoverable
         mobile-cards
+        :default-sort="['code', 'desc']"
         icon-pack="fas"
         sort-icon="chevron-up"
         aria-next-label="Next Page"
@@ -35,26 +36,14 @@
             </template>
 
             <div>
-              <template v-if="!isEnrolled">
-                <b-button
-                  title="Enroll"
-                  type="is-info"
-                  @click="enroll(props.row, props.index)"
-                >
-                  <i class="fas fa-plus"></i>
-                </b-button>
-              </template>
-
-              <template v-else>
-                <b-button
-                  title="Remove"
-                  type="is-danger"
-                  outlined
-                  @click="remove(props.row, props.index)"
-                >
-                  <i class="fas fa-times"></i>
-                </b-button>
-              </template>
+              <b-button
+                title="Remove"
+                type="is-danger"
+                outlined
+                @click="remove(props.row, props.index)"
+              >
+                <i class="fas fa-times"></i>
+              </b-button>
             </div>
           </b-table-column>
         </template>
@@ -62,8 +51,7 @@
         <template slot="empty">
           <section
             v-if="isEmpty"
-            class="section"
-          >
+            class="section">
               <div class="content has-text-grey has-text-centered">
                 <p>
                   <b-icon
@@ -91,35 +79,21 @@ export default {
   },
   computed: {
     isEmpty() {
-      if (this.$store.state.subjects.length < 1) {
+      if (this.$store.state.enrolledSubjects.length < 1) {
         return true
       } else {
         return false;
       }
-    },
-    isEnrolled() {
-      this.$store.state.enrolledSubjects.map(subject => {
-        if (subject.code === 'ESP101') {
-          return true;
-        } else {
-          return false;
-        }
-      });
     }
   },
   mounted() {
-    this.subjects = this.$store.state.subjects;
+    this.subjects = this.$store.state.enrolledSubjects;
   },
   methods: {
-    enroll(subject, index) {
-      this.$store.state.enrolledSubjects.splice(0, 0, subject);
-      this.$store.state.subjects.splice(index, 1);
-      return index;
-    },
     remove(subject, index) {
+      this.$store.state.subjects.splice(0, 0, subject);
       this.$store.state.enrolledSubjects.splice(index, 1);
-      return index;
-    },
+    }
   }
 }
 </script>
