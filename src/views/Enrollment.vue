@@ -45,6 +45,7 @@
                 </b-button>
               </template>
 
+              <!-- Not being used -->
               <template v-else>
                 <b-button
                   title="Remove"
@@ -116,9 +117,19 @@ export default {
       this.$store.state.subjects.splice(index, 1);
       return index;
     },
-    remove(subject, index) {
-      this.$store.state.enrolledSubjects.splice(index, 1);
-      return index;
+    async remove(subject, index) {
+      const confirmation = await swal({
+        title: 'Confirmación',
+        text: `¿Seguro que desea borrar al usuario '` + subject.code + `'?`,
+        icon: 'warning',
+        buttons: ['Cancelar', true],
+        dangerMode: true
+      });
+
+      if (confirmation) {
+        this.$store.state.enrolledSubjects.splice(index, 1);
+        return index;
+      }
     },
   }
 }

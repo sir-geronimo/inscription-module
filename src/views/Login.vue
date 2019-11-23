@@ -10,6 +10,7 @@
                     <b-input
                         type="text"
                         :value="username"
+                        v-model="username"
                         placeholder="Your username"
                         required>
                     </b-input>
@@ -19,6 +20,7 @@
                     <b-input
                         type="password"
                         :value="password"
+                        v-model="password"
                         password-reveal
                         placeholder="Your password"
                         required>
@@ -35,10 +37,30 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2';
+
 export default {
+    data() {
+        return {
+            username: '',
+            password: ''
+        }
+    },
     methods: {
         login() {
-                        
+            if (this.username === this.$store.state.credentials.username 
+                && this.password === this.$store.state.credentials.password
+            ){
+                this.$store.state.user.username=this.username;
+                this.$store.state.user.password=this.password;
+                this.$store.state.user.logged=true;
+                this.$router.push({ name: 'enrollment'});
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Usuario invalido'
+                });
+            }            
         }
     }
 }

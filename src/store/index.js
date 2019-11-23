@@ -32,7 +32,11 @@ export default new Vuex.Store({
         'teacher': 'Juan Aquino'
       },
     ],
-    enrolledSubjects: []
+    enrolledSubjects: [],
+    credentials: {
+      username: 'lapampara',
+      password: 'prendia'
+    }
   },
   mutations: {
   },
