@@ -37,9 +37,10 @@
 </template>
 
 <script>
-import Swal from 'sweetalert2';
+import swal from 'sweetalert';
 
 export default {
+    name: 'Login',
     data() {
         return {
             username: '',
@@ -54,12 +55,22 @@ export default {
                 this.$store.state.user.username=this.username;
                 this.$store.state.user.password=this.password;
                 this.$store.state.user.logged=true;
-                this.$router.push({ name: 'enrollment'});
+                
+                swal({
+                    title: 'Confirmación',
+                    text: `Acceso correcto`,
+                    icon: 'success'
+                });              
+                this.$router
+                    .push({ name: 'enrollment'})
+                    .catch(e => {});
+                
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    text: 'Usuario invalido'
-                });
+                swal({
+                    title: 'Confirmación',
+                    text: `Acceso incorrecto`,
+                    icon: 'warning'
+                }); 
             }            
         }
     }

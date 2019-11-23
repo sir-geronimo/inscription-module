@@ -83,6 +83,8 @@
 </template>
 
 <script>
+import swal from 'sweetalert';
+
 export default {
   data() {
     return {
@@ -113,14 +115,21 @@ export default {
   },
   methods: {
     enroll(subject, index) {
+      swal({
+          title: 'Confirmación',
+          text: `Asignatura inscrita correctamente`,
+          icon: 'success'
+      }); 
       this.$store.state.enrolledSubjects.splice(0, 0, subject);
       this.$store.state.subjects.splice(index, 1);
       return index;
     },
+
+    // Not being used
     async remove(subject, index) {
       const confirmation = await swal({
         title: 'Confirmación',
-        text: `¿Seguro que desea borrar al usuario '` + subject.code + `'?`,
+        text: `¿Seguro que desea borrar la asignaturan '` + subject.code + `'?`,
         icon: 'warning',
         buttons: ['Cancelar', true],
         dangerMode: true

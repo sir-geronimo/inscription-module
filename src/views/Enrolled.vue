@@ -70,6 +70,8 @@
 </template>
 
 <script>
+import swal from 'sweetalert';
+
 export default {
   data() {
     return {
@@ -90,9 +92,20 @@ export default {
     this.subjects = this.$store.state.enrolledSubjects;
   },
   methods: {
-    remove(subject, index) {
-      this.$store.state.subjects.splice(0, 0, subject);
-      this.$store.state.enrolledSubjects.splice(index, 1);
+    async remove(subject, index) {
+      const confirmation = await swal({
+        title: 'Confirmación',
+        text: `¿Seguro que desea borrar la asignaturan '` + subject.code + `'?`,
+        icon: 'warning',
+        buttons: ['Cancelar', true],
+        dangerMode: true
+      });
+
+      if (confirmation) {
+        this.$store.state.subjects.splice(0, 0, subject);
+        this.$store.state.enrolledSubjects.splice(index, 1);
+      }
+      return index;
     }
   }
 }

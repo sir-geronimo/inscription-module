@@ -34,8 +34,8 @@ export default new Vuex.Store({
     ],
     enrolledSubjects: [],
     credentials: {
-      username: 'lapampara',
-      password: 'prendia'
+      username: 'user',
+      password: 'pass'
     }
   },
   mutations: {

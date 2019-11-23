@@ -1,12 +1,18 @@
 import { shallowMount } from '@vue/test-utils'
-import HelloWorld from '@/components/HelloWorld.vue'
+import Enrollment from '@/views/Enrollment'
 
-describe('HelloWorld.vue', () => {
-  it('renders props.msg when passed', () => {
-    const msg = 'new message'
-    const wrapper = shallowMount(HelloWorld, {
-      propsData: { msg }
-    })
-    expect(wrapper.text()).toMatch(msg)
+describe('Enrollment.vue', () => {
+  it('enrollment method', () => {
+    const wrapper = shallowMount(Enrollment, {
+    });
+
+    let x = wrapper.vm;
+    let result = x.enroll({
+      'name': 'Redacción II',
+      'code': 'ESP102',
+      'teacher': 'Pepe Miguel'
+    }, 1);
+    
+    expect(result).toMatch(1);
   })
 })

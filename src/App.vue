@@ -1,20 +1,30 @@
 <template>
   <div id="app">
     <NavBar></NavBar>
-    <div class="section">
+    <div v-if="isLogged" class="section">
       <router-view/>
+    </div>
+    <div v-else>
+      <Login/>    
     </div>
   </div>
 </template>
 
 <script>
 import NavBar from '@/components/NavBar.vue'
+import Login from '@/views/Login.vue'
 
 export default {
   name: 'App',
   components: {
-    NavBar
-  }  
+    NavBar,
+    Login
+  },
+  computed: {
+    isLogged() {
+      return this.$store.state.user.logged;
+    }
+  }
 }
 </script>
 
